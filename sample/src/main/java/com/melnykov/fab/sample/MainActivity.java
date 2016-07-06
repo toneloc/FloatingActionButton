@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             actionBar.addTab(actionBar.newTab()
-                    .setText("ListView")
+                    .setText("My Countries")
                     .setTabListener(new ActionBar.TabListener() {
                         @Override
                         public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }));
             actionBar.addTab(actionBar.newTab()
-                    .setText("RecyclerView")
+                    .setText("Results")
                     .setTabListener(new ActionBar.TabListener() {
                         @Override
                         public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-                            fragmentTransaction.replace(android.R.id.content, new RecyclerViewFragment());
+//                            fragmentTransaction.replace(android.R.id.content, new RecyclerViewFragment());
                         }
 
                         @Override
@@ -73,22 +73,22 @@ public class MainActivity extends AppCompatActivity {
                         public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
                         }
                     }));
-            actionBar.addTab(actionBar.newTab()
-                    .setText("ScrollView")
-                    .setTabListener(new ActionBar.TabListener() {
-                        @Override
-                        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-                            fragmentTransaction.replace(android.R.id.content, new ScrollViewFragment());
-                        }
-
-                        @Override
-                        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-                        }
-
-                        @Override
-                        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-                        }
-                    }));
+//            actionBar.addTab(actionBar.newTab()
+//                    .setText("ScrollView")
+//                    .setTabListener(new ActionBar.TabListener() {
+//                        @Override
+//                        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+//                            fragmentTransaction.replace(android.R.id.content, new ScrollViewFragment());
+//                        }
+//
+//                        @Override
+//                        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+//                        }
+//
+//                        @Override
+//                        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+//                        }
+//                    }));
         }
     }
 
@@ -131,33 +131,14 @@ public class MainActivity extends AppCompatActivity {
             list.setAdapter(listAdapter);
 
             FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-            fab.attachToListView(list, new ScrollDirectionListener() {
-                @Override
-                public void onScrollDown() {
-                    Log.d("ListViewFragment", "onScrollDown()");
-                }
-
-                @Override
-                public void onScrollUp() {
-                    Log.d("ListViewFragment", "onScrollUp()");
-                }
-            }, new AbsListView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
-                    Log.d("ListViewFragment", "onScrollStateChanged()");
-                }
-
-                @Override
-                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    Log.d("ListViewFragment", "onScroll()");
-                }
-            });
+            fab.attachToListView(list);
 
             return root;
+
         }
     }
 
-    public static class RecyclerViewFragment extends Fragment {
+    public static class ResultsFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.fragment_recyclerview, container, false);
@@ -178,31 +159,31 @@ public class MainActivity extends AppCompatActivity {
             return root;
         }
     }
-
-    public static class ScrollViewFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View root = inflater.inflate(R.layout.fragment_scrollview, container, false);
-
-            ObservableScrollView scrollView = (ObservableScrollView) root.findViewById(R.id.scroll_view);
-            LinearLayout list = (LinearLayout) root.findViewById(R.id.list);
-
-            String[] countries = getResources().getStringArray(R.array.countries);
-            for (String country : countries) {
-                TextView textView = (TextView) inflater.inflate(R.layout.list_item, container, false);
-                String[] values = country.split(",");
-                String countryName = values[0];
-                int flagResId = getResources().getIdentifier(values[1], "drawable", getActivity().getPackageName());
-                textView.setText(countryName);
-                textView.setCompoundDrawablesWithIntrinsicBounds(flagResId, 0, 0, 0);
-
-                list.addView(textView);
-            }
-
-            FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-            fab.attachToScrollView(scrollView);
-
-            return root;
-        }
-    }
 }
+
+//    public static class ScrollViewFragment extends Fragment {
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//            View root = inflater.inflate(R.layout.fragment_scrollview, container, false);
+//
+//            ObservableScrollView scrollView = (ObservableScrollView) root.findViewById(R.id.scroll_view);
+//            LinearLayout list = (LinearLayout) root.findViewById(R.id.list);
+//
+//            String[] countries = getResources().getStringArray(R.array.countries);
+//            for (String country : countries) {
+//                TextView textView = (TextView) inflater.inflate(R.layout.list_item, container, false);
+//                String[] values = country.split(",");
+//                String countryName = values[0];
+//                int flagResId = getResources().getIdentifier(values[1], "drawable", getActivity().getPackageName());
+//                textView.setText(countryName);
+//                textView.setCompoundDrawablesWithIntrinsicBounds(flagResId, 0, 0, 0);
+//
+//                list.addView(textView);
+//            }
+//
+//            FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
+//            fab.attachToScrollView(scrollView);
+//
+//            return root;
+//        }
+//    }
